@@ -11,10 +11,20 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.FrameLayout;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+    private BottomNavigationView bottomNavigationView;
+    private FrameLayout frameLayout;
+
+    //Fragments
+
+    private DashBoardFragment dashBoardFragment;
+    private IncomeFragment incomeFragment;
+    private ExpenseFragment expenseFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +35,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // error here
        // setSupportActionBar(toolbar);
         toolbar.setTitle("Expense Manager");
-
+        bottomNavigationView= findViewById(R.id.bottomNavigationBar);
+        frameLayout= findViewById(R.id.main_frame);
         DrawerLayout drawerLayout= findViewById(R.id.drawer_layout);
 
         ActionBarDrawerToggle toggle=new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,
@@ -36,6 +47,38 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView=findViewById(R.id.naView);
         navigationView.setNavigationItemSelectedListener(this);
 
+        dashBoardFragment= new DashBoardFragment();
+        incomeFragment = new IncomeFragment();
+        expenseFragment= new ExpenseFragment();
+
+        setFragment(dashBoardFragment);
+
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.dashboard:
+                        setFragment(dashBoardFragment);
+                            return true;
+                    case R.id.income:
+                        setFragment(incomeFragment);
+                        return true;
+                    case R.id.expense:
+                        setFragment(expenseFragment);
+                        return true;
+                    default:
+                        return false;
+                }
+            }
+        });
+
+
+    }
+
+    private void setFragment(Fragment fragment) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.main_frame,fragment);
+        fragmentTransaction.commit();
     }
 
     @Override
@@ -55,10 +98,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         switch (itemId){
             case R.id.dashboard:
+                fragment = new DashBoardFragment();
                 break;
             case R.id.income:
+                fragment = new IncomeFragment();
                 break;
             case R.id.expense:
+                fragment = new ExpenseFragment();
                 break;
 
         }
