@@ -26,6 +26,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private IncomeFragment incomeFragment;
     private ExpenseFragment expenseFragment;
 
+   
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +46,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView=findViewById(R.id.naView);
-        navigationView.setNavigationItemSelectedListener(this);
+
 
         dashBoardFragment= new DashBoardFragment();
         incomeFragment = new IncomeFragment();
