@@ -181,62 +181,62 @@ public class DashBoardFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
-                LayoutInflater inflater = LayoutInflater.from(getActivity());
-                View myview = inflater.inflate(R.layout.custom_layout_for_insertdata,null);
-                mydialog.setView(myview);
-                AlertDialog dialog = mydialog.create();
 
-                EditText edtAmount = myview.findViewById(R.id.amount_edt);
-                EditText edtType = myview.findViewById(R.id.type_edt);
-                EditText edtNote = myview.findViewById(R.id.note_edt);
-
-                Button btnSave = myview.findViewById(R.id.btnSave);
-                Button btnCancel = myview.findViewById(R.id.btnCancel);
-
-                btnSave.setOnClickListener(new View.OnClickListener()
-                {
-                    @Override
-                    public void onClick(View v)
-                    {
-
-                            String type = edtType.getText().toString().trim();
-                            String amount = edtAmount.getText().toString().trim();
-                            String note = edtNote.getText().toString().trim();
-
-                            if(TextUtils.isEmpty(type))
-                            {
-                                edtType.setError("Field is Required!");
-                                return;
-                            }
-                            if(TextUtils.isEmpty(amount))
-                            {
-                                edtAmount.setError("Field is Required!");
-                                return;
-                            }
-
-                            int ouramountint = Integer.parseInt(amount);
-                            if(TextUtils.isEmpty(note))
-                            {
-                                edtNote.setError("Field is Required!");
-                                return;
-                            }
-                    }
-                });
-
-                btnCancel.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        dialog.dismiss();
-                    }
-                });
-                dialog.show();
             }
         });
     }
 
     public void incomeDataInsert()
     {
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View myview = inflater.inflate(R.layout.custom_layout_for_insertdata,null);
+        mydialog.setView(myview);
+        AlertDialog dialog = mydialog.create();
 
+        EditText edtAmount = myview.findViewById(R.id.amount_edt);
+        EditText edtType = myview.findViewById(R.id.type_edt);
+        EditText edtNote = myview.findViewById(R.id.note_edt);
+
+        Button btnSave = myview.findViewById(R.id.btnSave);
+        Button btnCancel = myview.findViewById(R.id.btnCancel);
+
+        btnSave.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+
+                String type = edtType.getText().toString().trim();
+                String amount = edtAmount.getText().toString().trim();
+                String note = edtNote.getText().toString().trim();
+
+                if(TextUtils.isEmpty(type))
+                {
+                    edtType.setError("Field is Required!");
+                    return;
+                }
+                if(TextUtils.isEmpty(amount))
+                {
+                    edtAmount.setError("Field is Required!");
+                    return;
+                }
+
+                int ouramountint = Integer.parseInt(amount);
+                if(TextUtils.isEmpty(note))
+                {
+                    edtNote.setError("Field is Required!");
+                    return;
+                }
+            }
+        });
+
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 }
