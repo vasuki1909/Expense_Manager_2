@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:cardElevation="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="5dp"
     android:layout_margin="5dp"
     android:elevation="5dp"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="horizontal"
@@ -19,7 +19,8 @@
           <TextView
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:text="6 June 2020"
+              android:text="1 Dec 2020"
+              android:textColor="@color/purple_500"
               android:textAppearance="?android:textAppearanceSmall"
               android:textStyle="bold"
               android:id="@+id/date_txt_income"
@@ -62,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="60000"
+                android:textColor="#FF9800"
                 android:textAppearance="?android:textAppearanceSmall"
                 android:textStyle="bold"
                 android:id="@+id/amount_txt_income"
