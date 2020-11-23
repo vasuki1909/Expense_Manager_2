@@ -42,9 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         //used for to stay logged inside the app
 
-        /*if(mAuth.getCurrentUser()!= null){
+        if(mAuth.getCurrentUser()!= null){
             startActivity(new Intent(getApplicationContext(),HomeActivity.class));
-        }*/
+        }
         //till here if needed comment this part out
 
     }
