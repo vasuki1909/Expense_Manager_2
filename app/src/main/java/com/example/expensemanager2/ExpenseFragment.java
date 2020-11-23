@@ -146,7 +146,7 @@ public class ExpenseFragment extends Fragment {
 
                     String stTotalvale = String.valueOf(totalvalue);
 
-                    expenseSumResult.setText(stTotalvale);
+                    expenseSumResult.setText(stTotalvale+".00");
                 }
             }
 
