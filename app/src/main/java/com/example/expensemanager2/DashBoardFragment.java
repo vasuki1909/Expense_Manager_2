@@ -3,6 +3,7 @@ package com.example.expensemanager2;
 import android.app.AlertDialog;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -21,8 +22,11 @@ import com.example.expensemanager2.Model.Data;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -51,6 +55,10 @@ public class DashBoardFragment extends Fragment
     //animation.
     private Animation FadOpen,FadeClose;
 
+    //Dashboard income and expense
+
+    private TextView totalIncomeResult;
+    private TextView totalExpenseResult;
     //Firebase
     private FirebaseAuth mAuth;
     private DatabaseReference mIncomeDatabase;
@@ -123,6 +131,11 @@ public class DashBoardFragment extends Fragment
         fab_income_txt=myview.findViewById(R.id.income_ft_text);
         fab_expense_txt=myview.findViewById(R.id.expense_ft_text);
 
+        //Total income and expense result
+
+        totalIncomeResult = myview.findViewById(R.id.income_set_result);
+        totalExpenseResult = myview.findViewById(R.id.expense_set_result);
+
         //animation
 
         FadOpen=AnimationUtils.loadAnimation(getActivity(),R.anim.fade_open);
@@ -165,6 +178,28 @@ public class DashBoardFragment extends Fragment
                  }
             }
 
+        });
+
+        //Calculate total income
+
+        mIncomeDatabase.addValueEventListener(new ValueEventListener()
+        {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                int totalsum = 0;
+                for (DataSnapshot mysnap:snapshot.getChildren())
+                {
+                    Data data = mysnap.getValue(Data.class);
+                    totalsum+=data.getAmount();
+                    String stResult = String.valueOf(totalsum);
+                    totalIncomeResult.setText(stResult);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
         });
 
         return myview;
