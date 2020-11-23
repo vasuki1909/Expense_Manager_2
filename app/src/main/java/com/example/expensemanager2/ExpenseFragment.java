@@ -1,5 +1,6 @@
 package com.example.expensemanager2;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.expensemanager2.Model.Data;
@@ -22,6 +25,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.DateFormat;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -43,6 +49,27 @@ public class ExpenseFragment extends Fragment {
 
     //Text view
     private TextView expenseSumResult;
+
+
+    //update edit text
+
+    private EditText edtamount;
+    private EditText edttype;
+    private EditText edtnote;
+
+
+    private Button btnUpdate;
+    private Button btnDelete;
+
+
+    ///Data item Value
+
+    private  String type;
+    private  String note;
+    private  int amount;
+
+    private String post_key;
+
 
 
     // TODO: Rename parameter arguments, choose names that match
@@ -149,6 +176,18 @@ public class ExpenseFragment extends Fragment {
                 myViewHolder.setType(data.getType());
                 myViewHolder.setNote(data.getNote());
                 myViewHolder.setDate(data.getDate());
+
+                myViewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        post_key=getRef(i).getKey();
+                        type= data.getType();
+                        note= data.getNote();
+                        amount=  data.getAmount();
+                        updateDataItem();
+                    }
+                });
             }
         };
         recyclerView.setAdapter(adapter);
@@ -185,6 +224,66 @@ public class ExpenseFragment extends Fragment {
             String stamount = String.valueOf(amount);
             mAmount.setText(stamount);
         }
+    }
+
+
+    private  void updateDataItem()
+    {
+        AlertDialog.Builder mydialog = new AlertDialog.Builder(getActivity());
+        LayoutInflater inflater= LayoutInflater.from(getActivity());
+
+        View myview= inflater.inflate(R.layout.update_data_item,null);
+        mydialog.setView(myview);
+
+        edtamount= myview.findViewById(R.id.amount_edt);
+        edtnote= myview.findViewById(R.id.note_edt);
+        edttype= myview.findViewById(R.id.type_edt);
+
+        // set data to edit text
+        edttype.setText(type);
+        edttype.setSelection(type.length());
+
+        edtnote.setText(note);
+        edtnote.setSelection(note.length());
+
+        edtamount.setText(String.valueOf(amount));
+        edtamount.setSelection(String.valueOf(amount).length());
+
+
+        btnUpdate = myview.findViewById(R.id.btn_update);
+        btnDelete = myview.findViewById(R.id.btn_delete);
+
+        AlertDialog dialog = mydialog.create();
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                type = edttype.getText().toString().trim();
+                note = edtnote.getText().toString().trim();
+
+                String mdamount = String.valueOf(amount);
+                mdamount = edtamount.getText().toString().trim();
+
+                int myAmount= Integer.parseInt(mdamount);
+
+                String mdate = DateFormat.getDateInstance().format(new Date());
+
+                Data data = new Data(myAmount,type,note,post_key,mdate);
+
+                mExpenseDatabase.child(post_key).setValue(data);
+                dialog.dismiss();
+            }
+        });
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mExpenseDatabase.child(post_key).removeValue();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
     }
 
 }
