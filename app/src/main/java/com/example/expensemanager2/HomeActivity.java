@@ -41,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // error here
        // setSupportActionBar(toolbar);
         toolbar.setTitle("Expense Manager");
+
         mAuth=FirebaseAuth.getInstance();
         bottomNavigationView= findViewById(R.id.bottomNavigationBar);
         frameLayout= findViewById(R.id.main_frame);
@@ -51,7 +52,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
 
-
+        NavigationView navigationView=findViewById(R.id.naView);
+        navigationView.setNavigationItemSelectedListener(this);
 
         dashBoardFragment= new DashBoardFragment();
         incomeFragment = new IncomeFragment();
