@@ -30,6 +30,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.DateFormat;
 import java.util.Date;
 
+import static com.firebase.ui.database.FirebaseRecyclerAdapter.*;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link IncomeFragment#newInstance} factory method to
@@ -163,6 +165,7 @@ public class IncomeFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+
         FirebaseRecyclerOptions<Data>options = new FirebaseRecyclerOptions.Builder<Data>().setQuery(mIncomeDatabase,Data.class).setLifecycleOwner(this).build();
 
         FirebaseRecyclerAdapter<Data, MyViewHolder> adapter = new FirebaseRecyclerAdapter<Data, MyViewHolder>(options) {
