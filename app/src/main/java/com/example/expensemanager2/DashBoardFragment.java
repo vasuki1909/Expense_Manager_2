@@ -192,7 +192,7 @@ public class DashBoardFragment extends Fragment
                     Data data = mysnap.getValue(Data.class);
                     totalsum+=data.getAmount();
                     String stResult = String.valueOf(totalsum);
-                    totalIncomeResult.setText(stResult);
+                    totalIncomeResult.setText(stResult+".00");
                 }
             }
 
@@ -213,7 +213,7 @@ public class DashBoardFragment extends Fragment
                     Data data = mysnap.getValue(Data.class);
                     totalsum+=data.getAmount();
                     String stResult = String.valueOf(totalsum);
-                    totalExpenseResult.setText(stResult);
+                    totalExpenseResult.setText(stResult+".00");
                 }
             }
 
