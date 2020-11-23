@@ -27,6 +27,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.util.Date;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link IncomeFragment#newInstance} factory method to
@@ -259,11 +262,27 @@ public class IncomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
+                type = edttype.getText().toString().trim();
+                note = edtnote.getText().toString().trim();
+
+                String mdamount = String.valueOf(amount);
+                mdamount = edtamount.getText().toString().trim();
+
+                int myAmount= Integer.parseInt(mdamount);
+
+                String mdate = DateFormat.getDateInstance().format(new Date());
+
+                Data data = new Data(myAmount,type,note,post_key,mdate);
+
+                mIncomeDatabase.child(post_key).setValue(data);
+                dialog.dismiss();
             }
         });
         btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                mIncomeDatabase.child(post_key).removeValue();
             dialog.dismiss();
             }
         });
