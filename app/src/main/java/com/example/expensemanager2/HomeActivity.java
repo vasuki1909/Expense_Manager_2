@@ -9,12 +9,14 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private BottomNavigationView bottomNavigationView;
@@ -25,6 +27,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private DashBoardFragment dashBoardFragment;
     private IncomeFragment incomeFragment;
     private ExpenseFragment expenseFragment;
+
+    private FirebaseAuth mAuth;
 
    
 
@@ -37,6 +41,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         // error here
        // setSupportActionBar(toolbar);
         toolbar.setTitle("Expense Manager");
+        mAuth=FirebaseAuth.getInstance();
         bottomNavigationView= findViewById(R.id.bottomNavigationBar);
         frameLayout= findViewById(R.id.main_frame);
         DrawerLayout drawerLayout= findViewById(R.id.drawer_layout);
@@ -53,6 +58,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         expenseFragment= new ExpenseFragment();
 
         setFragment(dashBoardFragment);
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -106,6 +112,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.expense:
                 fragment = new ExpenseFragment();
+                break;
+            case R.id.logout:
+                mAuth.signOut();
+                startActivity(new Intent(getApplicationContext(),MainActivity.class));
                 break;
 
         }

@@ -17,7 +17,8 @@
             android:id="@+id/type_income_ds"
             android:layout_width="match_parent"
             android:text="Type:"
-            android:textColor="#FF9800"
+            android:textColor="#2196F3"
+
             android:gravity="center"
             android:textAppearance="?android:textAppearanceLarge"
             android:layout_height="wrap_content">
@@ -32,6 +33,7 @@
             android:padding="5dp"
             android:text="Amount:"
             android:textColor="#E91E63"
+
             android:layout_marginTop="10dp"
             android:textAppearance="?android:textAppearanceMedium">
 
@@ -43,7 +45,8 @@
             android:layout_height="wrap_content"
             android:text="10 May 2020"
             android:padding="5dp"
-            android:textColor="#2196F3"
+            android:textColor="#FF9800"
+
             android:textAppearance="?android:textAppearanceMedium"
             android:gravity="center"
             android:layout_marginTop="10dp">
