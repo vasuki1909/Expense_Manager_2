@@ -63,17 +63,16 @@
                 android:textColor="@android:color/white"
                 android:textAppearance="?android:textAppearanceMedium"
                 ></Button>
+
             <TextView
+                android:id="@+id/signin_here"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Already have an account? Sign in here."
 
-                android:id="@+id/signin_here"
-                android:padding="5dp"
-                android:textColor="@android:color/white"
                 android:gravity="center"
-                >
-            </TextView>
+                android:padding="5dp"
+                android:text="Already have an account? Sign in here."
+                android:textColor="@android:color/white"></TextView>
 
         </LinearLayout>
     </ScrollView>

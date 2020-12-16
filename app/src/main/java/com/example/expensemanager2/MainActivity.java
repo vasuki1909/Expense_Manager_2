@@ -61,34 +61,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                mAuth.signInWithEmailAndPassword(mEmail.getText().toString(),mPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                mAuth.signInWithEmailAndPassword(mEmail.getText().toString(), mPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
+                        if(task.isSuccessful()){
+                            if (mAuth.getCurrentUser().isEmailVerified()){
+                                startActivity(new Intent(MainActivity.this,HomeActivity.class));
+                            }else {
+                                Toast.makeText(MainActivity.this, " Please check your Email for verification .",Toast.LENGTH_LONG).show();
 
-                            startActivity(new Intent(MainActivity.this, HomeActivity.class));
+                            }
                         }
                         else{
                             Toast.makeText(MainActivity.this,task.getException().getMessage(),Toast.LENGTH_LONG).show();
                         }
-
                     }
-
-
                 });
-                String email = mEmail.getText().toString().trim();
-                String pass =  mPass.getText().toString().trim();
-
-
-                if (TextUtils.isEmpty(email)){
-                    mEmail.setError("Email Required.");
-                    return;
-                }
-                if (TextUtils.isEmpty(pass)){
-                    mPass.setError("Password Required.");
-                    return;
-                }
-
             }
         });
 

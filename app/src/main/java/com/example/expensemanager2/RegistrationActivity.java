@@ -1,4 +1,4 @@
-package com.example.expensemanager2;
+ package com.example.expensemanager2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -32,6 +32,8 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private ProgressDialog mDialog;
     private FirebaseAuth mAuth;
+    //FirebaseAuth firebaseAuth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,44 +51,46 @@ public class RegistrationActivity extends AppCompatActivity {
         btnReg = findViewById(R.id.btn_reg);
         mSignin = findViewById(R.id.signin_here);
 
+        //firebaseAuth = FirebaseAuth.getInstance();
+
+
         btnReg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = mEmail.getText().toString().trim();
-                String pass = mPass.getText().toString().trim();
-
-                if (TextUtils.isEmpty(email)) {
-                    mEmail.setError("Email Required.");
-                    return;
-                }
-                if (TextUtils.isEmpty(pass)) {
-                    mPass.setError("Password Required.");
-                }
-                mDialog.setMessage("Processing..");
-                 mAuth.createUserWithEmailAndPassword(email,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                  @Override
+                mAuth.createUserWithEmailAndPassword(mEmail.getText().toString(), mPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+                        if(task.isSuccessful()){
+                            mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()){
+                                        Toast.makeText(RegistrationActivity.this, "Registered successfully! Please check your Email for verification .",Toast.LENGTH_LONG).show();
+                                        mEmail.setText("");
+                                        mPass.setText("");
+                                    }
+                                    else {
+                                        Toast.makeText(RegistrationActivity.this,task.getException().getMessage(), Toast.LENGTH_LONG).show();
 
-                        if(task.isSuccessful())
-                        {
-                            mDialog.dismiss();
-                            Toast.makeText(getApplicationContext(),"Registration Completed",Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(getApplicationContext(),HomeActivity.class));
+                                    }
+
+                                }
+                            });
+
                         }
                         else{
-                            mDialog.dismiss();
-                            Toast.makeText(getApplicationContext(),"Registration Failed",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistrationActivity.this, task.getException().getMessage(),Toast.LENGTH_LONG).show();
                         }
                     }
                 });
             }
         });
 
-                mSignin.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
-                    }
-                });
+              //  mSignin.setOnClickListener(new View.OnClickListener() {
+                //    @Override
+                  //  public void onClick(View v) {
+                    //    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                  //  }
+                //});
             }
         }
